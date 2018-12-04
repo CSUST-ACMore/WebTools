@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="img/fav.png">
+	<meta charset="UTF-8">
+	<title>Lottery</title>
+	<link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/ButtonStylesInspiration/css/buttons.css">
+	<link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/ButtonStylesInspiration/css/normalize.css">
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+
+<body>
+
+	<div id="lottery" >
+		<div class="contain" style="background: rgb(113, 230, 109);height: 1100px;">
+			<div class="content" style="position: absolute;top: 40%;margin-left: 50%;left: -91px;">
+				<p style="text-align: center;font-size: 196px;margin: 0%;position: relative;top: 30%;">{{ lucky }}</p>
+				<button  class="button button--antiman button--round-l button--text-medium" @click="select">GO!</button>
+			</div>
+		</div>
+
+	</div>
+
+
+	<script>
+		var app = new Vue({
+			el: '#lottery',
+			data: {
+				lucky: 0,
+				totTeam: 187, 	//the number of teams
+			},
+			methods: {
+				select: function () {
+					do {
+						this.lucky = Math.ceil(Math.random() * this.totTeam)
+					} while (this.lucky == 0)
+				}
+			}
+		})	
+	</script>
+
+</body>
+
+</html>
