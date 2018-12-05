@@ -1,2 +1,6 @@
+
+# JetBrains
+.idea
+
+# local files
 Demo/
-.idea/

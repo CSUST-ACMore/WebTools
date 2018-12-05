@@ -1,0 +1,7 @@
+
+# JetBrains
+.idea
+
+# local
+test.py
+Dockerfile
