@@ -5,19 +5,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="shortcut icon" href="images/icons/ACMore.jpg">
 	<meta charset="UTF-8">
-	<title>Lottery</title>
+	<title>ACMore 2018 新生赛</title>
 	<link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/ButtonStylesInspiration/css/buttons.css">
 	<link rel="stylesheet" type="text/css" href="https://tympanus.net/Development/ButtonStylesInspiration/css/normalize.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
 </head>
 
 <body background="images/bg-01.jpg">
 
 	<div id="lottery">
 		<div class="contain">
-			<div class="content" style="position: absolute;top: 40%;margin-left: 46%;">
-				<p style="text-align: center;font-size: 196px;margin: 0%;top: 30%; color:red">{{ lucky }}</p>
-				<button style="align-items: center;" class="button button--antiman button--round-l button--text-medium" @click="select">GO!</button>
+			<div class="content" style="display: flex;justify-content: center;align-items: center;height: 900px;">
+				<p style="position: absolute; font-size: 196px;margin: 0%; color:red">{{ lucky_number }}</p>
+				<button style="position: absolute;margin: 0%;margin-top: 10%;" class="button button--antiman button--round-l button--text-medium" @click="select">GO!</button>
 			</div>
 		</div>
 	</div>
@@ -27,16 +28,29 @@
 			el: '#lottery',
 			data: {
 				lucky: 0,
-				totTeam: 187, 	//the number of teams
+				number: 0,
+				totTeam: 10, 	//the number of teams
+				luck_list: [0],
 			},
 			methods: {
 				select: function () {
 					do {
 						this.lucky = Math.ceil(Math.random() * this.totTeam)
-					} while (this.lucky == 0)
+					} while (this.luck_list.indexOf(this.lucky) >= 0)
+					this.luck_list.push(this.lucky)
+				},
+			},
+			computed: {
+				lucky_number: function() {
+					return Math.ceil(this.number);
+				}
+			},
+			watch: {
+				lucky: function(newValue) {
+					TweenLite.to(this.$data, 0.5, {number : newValue})	//the second parameter is the speed of change
 				}
 			}
-		})	
+		})
 	</script>
 
 </body>
