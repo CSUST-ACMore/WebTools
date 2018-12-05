@@ -2,6 +2,5 @@
 # JetBrains
 .idea
 
-# local
+# local test file
 test.py
-Dockerfile
