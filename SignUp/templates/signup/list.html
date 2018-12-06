@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ACMore2018新生赛</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="icon" type="image/png" href="{% static "signup/images/icons/favicon.ico" %}"/>
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/css/util.css">
+	<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/tb/Table_Responsive_v1/css/main.css">
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column4">序号</th>
+								<th class="column1">学号</th>
+								<th class="column2">姓名</th>
+								<th class="column3">学院</th>
+								<th class="column6">备注</th>
+							</tr>
+						</thead>
+						<tbody>
+                            {% if participant_list %}
+                                {% for participant in participant_list %}
+                                    <tr>
+                                        <td class="column4">{{ participant.id }}</td>
+                                        <td class="column1">{{ participant.school_id }}</td>
+                                        <td class="column2">{{ participant.name }}</td>
+                                        <td class="column3">{{ participant.faculty }}</td>
+                                        <td class="column6">{{ participant.remark }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <p>暂时还没有人报名,<a href="register.html">快来抢一血</a></p>
+                            {% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
+	<script src="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/bootstrap/js/popper.js"></script>
+	<script src="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="https://colorlib.com/etc/tb/Table_Responsive_v1/vendor/select2/select2.min.js"></script>
+	<script src="https://colorlib.com/etc/tb/Table_Responsive_v1/js/main.js"></script>
+
+</body>
+</html>
