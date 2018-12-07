@@ -1,38 +1,29 @@
-{% load static %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>ACMore2018新生赛</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="{% static "signup/images/icons/favicon.ico" %}"/>
+    <link rel="icon" href="http://113.240.233.2:8081/image/favicon1.ico"/>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,700,800" rel="stylesheet">
-
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/animate.css">
-    
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/owl.carousel.min.css">
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/magnific-popup.css">
-
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/aos.css">
-
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/ionicons.min.css">
-
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/jquery.timepicker.css">
-
-    
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/flaticon.css">
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/icomoon.css">
     <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/style.css">
   </head>
   <body>
     
-
-    
     <section class="home-slider owl-carousel ftco-degree-bg">
-      <div class="slider-item" style="background-image: {% static "signup/images/bg-01.jpg" %}" data-stellar-background-ratio="0.5">
+      <div class="slider-item" style="background-image: {% static "signup/img/bg-01.jpg" %}" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text align-items-center justify-content-center">
@@ -87,7 +78,7 @@
             <p>4. 如果认为题目描述(或者判题数据)存在问题，可以通知工作人员，如果确认问题存在，我们将更新题目，更新后会通知所有参赛者。</p>
             <p>5. 比赛中至少有一次提交的参赛者会根据解题数目进行排名。如果多个参赛者解题数量相同，则根据总用时加上惩罚时间进行排名。总用时和惩罚时间由每道解答正确的赛题的用时加上罚时而成。每道题用时将从竞赛开始到该题解答被判定为正确为止，其间每一次(除编译错误外)错误的运行将被加罚20分钟时间，未正确解答的试题不记时。</p>
             <p>6. 比赛过程中队伍的实时排名会即时更新，选手可以通过排名表（Ranklist）在线查看自己和其他队伍的实时排名以及解出的题目。但比赛的最后一小时排名会停止更新，这也是各参赛者拉开差距的一个机会，比赛结束后会进行滚榜。</p>
-            <p>7. 比赛中能使用的语言包括C++、C、python和Java，比赛提供记事本，CodeBlocks，Dev，Eclipse。（注意不提供Python环境，如有需要请提前联系会长）</p>
+            <p>7. 比赛中能使用的语言包括C++、C、python和Java，比赛提供记事本，CodeBlocks，Dev，Eclipse。（注意机房没有Python环境,当然也没有写Python的IDE）</p>
             <p>8. 每人使用一台计算机，所有队伍使用计算机的规格配置完全相同，如果计算机工作不正常，可向工作人员申请更换，不得私自更换。</p>
           </div>
         </div>
@@ -107,6 +98,7 @@
           <p>2. 最早通过某题的参赛者会额外获得一个特殊的气球。(比赛结束后气球可以带出场外，但不要随便乱丢哦～)</p>
           <p>3. 根据滚榜结束后的最终榜单，从高到低依次发放奖品，名次高的优先选择，发完为止。</p>
           <p>4. 本次比赛接受了牛客网的赞助，对于牛客网提供的奖品，将以抽奖的形式进行发放，保证每个人被抽中的概率相同，且只会被抽中一次。</p>
+          <p>5. <a href="lottery.html">点此检查抽奖网页</a>，注意抽奖总人数为报名审核通过的人数(报名状态为Accepted即为通过)。</p>
         </div>
       </div>
     </section>

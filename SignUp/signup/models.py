@@ -8,7 +8,7 @@ class Participant(models.Model):
     school_id = models.BigIntegerField()
     qq_number = models.BigIntegerField()
     faculty = models.CharField(max_length=20)
-    remark = models.CharField(max_length=10, default='等待审核')
+    remark = models.CharField(max_length=10, default='Accepted')
 
     def __str__(self):
         return self.name

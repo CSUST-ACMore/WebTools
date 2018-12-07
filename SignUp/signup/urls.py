@@ -9,5 +9,6 @@ app_name = 'signup'
 urlpatterns = [
     url(r'^register', views.register, name='register'),
     url(r'^list', views.par_list, name='list'),
-    url(r'', views.index, name='index')
-] + static(settings.STATIC_URL)
+    url(r'^lottery', views.lottery, name='lottery'),
+    url(r'^$', views.index, name='index')
+]
