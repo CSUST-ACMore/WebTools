@@ -37,6 +37,6 @@ def par_list(request):
 
 
 def lottery(request):
-    participant_count = Participant.objects.filter(remark='Accepted').count()
+    participant_count = Participant.objects.filter(remark=0).count()
     return render(request, 'signup/lottery.html', {'totTeam': participant_count})
 
