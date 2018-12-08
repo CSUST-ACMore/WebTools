@@ -9,8 +9,10 @@ class Participant(models.Model):
         (1, "Rejected"),
         (2, "No Response"),
         (3, "Waiting Judge"),
-        (4, "Cancelled"),
-        (5, "Deleted"),
+        (4, "unRating"),
+        (5, "Skipped"),
+        (6, "Cancelled"),
+        (7, "Deleted"),
     )
     name = models.CharField(max_length=10)
     school_id = models.BigIntegerField()
