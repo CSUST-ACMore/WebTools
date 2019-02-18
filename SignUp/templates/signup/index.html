@@ -2,23 +2,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ACMore2018新生赛</title>
+    <title>{{ contest.name }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.6, shrink-to-fit=no">
-    <link rel="icon" href="http://113.240.233.2:8081/image/favicon1.ico"/>
+    <link rel="icon" href="{% static 'signup/img/favicon.ico' %}"/>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,700,800" rel="stylesheet">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/animate.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/magnific-popup.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/aos.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/ionicons.min.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/flaticon.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/icomoon.css">
-    <link rel="stylesheet" href="https://colorlib.com/preview/theme/racks/css/style.css">
+    <link rel="stylesheet" href="{% static 'signup/css/index/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/jquery.timepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'signup/css/index/style.css' %}">
   </head>
   <body>
     
@@ -29,13 +29,22 @@
           <div class="row slider-text align-items-center justify-content-center">
             <div class="col-md-10 ftco-animate text-center">
               <h1 class="mb-4">
-                <strong class="typewrite" data-period="4000" data-type='[ "ACMore 2018 新生赛" ]'>
+                <strong class="typewrite" data-period="4000" data-type='[ "{{ contest.name }}" ]'>
                   <span class="wrap"></span>
                 </strong>
               </h1>
-              <p>比赛时间：2018年12月22日12时</p>
-              <p>比赛地点：金盆岭校区7号教学楼(具体机房待定)</p>
-              <p><a href="register.html" class="btn btn-primary btn-outline-white px-4 py-3 ">  立 即 报 名  </a></p>
+              <p>比赛时间：{{ contest.contest_time }}</p>
+              <p>比赛地点：{{ contest.contest_location }}</p>
+                {% if contest.start_time.timestamp > now  %}
+                    <p> 报名时间 ： {{ contest.start_time }} - {{ contest.end_time }} </p>
+                {% elif contest.end_time.timestamp > now %}
+                    <p> 报名截止时间 ： {{ contest.end_time }} </p>
+                    <p><a href="register.html" class="btn btn-primary btn-outline-white px-4 py-3 ">  立 即 报 名  </a></p>
+                {% else %}
+                    <p> 报名已截止 </p>
+                    <p><a href="list.html" class="btn btn-primary btn-outline-white mt-3 py-3 px-4"> 参 赛 名 单 </a></p>
+                {% endif %}
+
             </div>
           </div>
         </div>
@@ -55,9 +64,7 @@
           </div>
         </div>
         <div class="row slider-text align-items-center justify-content-center" style="font-size: 20px;">
-          <p>ACM程序设计大赛是大学级别最高的脑力竞赛，素来被冠以"程序设计的奥林匹克"的尊称。</p>
-          <p>大赛至今已有近40年的历史，是世界范围内历史最悠久、规模最大的程序设计竞赛。</p>
-          <p>比赛形式：参赛人员于指定的时间、地点参加比赛，用一台计算机解决7到13个生活中的实际问题。</p>
+          <p>{{ contest.introduction }}</p>
         </div>
       </div>
     </section>
@@ -72,14 +79,7 @@
             </div>
           </div>
           <div class="row slider-text align-items-center " style="font-size: 20px;">
-            <p>1. ACMore2018新生赛中共10~13道题，难度分梯次，比赛时长为5小时，比赛形式为个人赛。</p>
-            <p>2. 参赛者可以携带诸如书、手册、程序清单等纸质参考资料，不得携带任何电子媒质的资料，比赛期间不允许访问其他无关网页，也不允许以任何理由与其他参赛者交流，有特殊需要请与工作人员沟通。</p>
-            <p>3. 试题的每一次提交会被判为正确或者错误，判决结果会及时通知参赛者，对判决结果有异议的请联系工作人员。</p>
-            <p>4. 如果认为题目描述(或者判题数据)存在问题，可以通知工作人员，如果确认问题存在，我们将更新题目，更新后会通知所有参赛者。</p>
-            <p>5. 比赛中至少有一次提交的参赛者会根据解题数目进行排名。如果多个参赛者解题数量相同，则根据总用时加上惩罚时间进行排名。总用时和惩罚时间由每道解答正确的赛题的用时加上罚时而成。每道题用时将从竞赛开始到该题解答被判定为正确为止，其间每一次(除编译错误外)错误的运行将被加罚20分钟时间，未正确解答的试题不记时。</p>
-            <p>6. 比赛过程中队伍的实时排名会即时更新，选手可以通过排名表（Ranklist）在线查看自己和其他队伍的实时排名以及解出的题目。但比赛的最后一小时排名会停止更新，这也是各参赛者拉开差距的一个机会，比赛结束后会进行滚榜。</p>
-            <p>7. 比赛中能使用的语言包括C++、C、python和Java，比赛提供记事本，CodeBlocks，Dev，Eclipse。（注意机房没有Python环境,当然也没有写Python的IDE）</p>
-            <p>8. 每人使用一台计算机，所有队伍使用计算机的规格配置完全相同，如果计算机工作不正常，可向工作人员申请更换，不得私自更换。</p>
+            <p>{{ contest.rules }}</p>
           </div>
         </div>
       </div>
@@ -94,11 +94,7 @@
           </div>
         </div>
         <div class="row slider-text align-items-center" style="font-size: 20px;">
-          <p>1. 每道题对应一种颜色的气球，参赛者每解出一题，工作人员即会在其桌子上放置一个相应颜色的气球。(比赛结束后气球可以带出场外，但不要随便乱丢哦～)</p>
-          <p>2. 最早通过某题的参赛者会额外获得一个特殊的气球。(比赛结束后气球可以带出场外，但不要随便乱丢哦～)</p>
-          <p>3. 根据滚榜结束后的最终榜单，从高到低依次发放奖品，名次高的优先选择，发完为止。</p>
-          <p>4. 本次比赛接受了牛客网的赞助，对于牛客网提供的奖品，将以抽奖的形式进行发放，保证每个人被抽中的概率相同，且只会被抽中一次。</p>
-          <p>5. <a href="lottery.html">点此检查抽奖网页</a>，注意抽奖总人数为报名审核通过的人数(报名状态为Accepted即为通过)。</p>
+            <p>{{ contest.reward }}</p>
         </div>
       </div>
     </section>
@@ -144,25 +140,27 @@
   
 
   <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/>
+  </svg></div>
 
 
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/popper.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/bootstrap.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.easing.1.3.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.waypoints.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.stellar.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/owl.carousel.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.magnific-popup.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/aos.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.animateNumber.min.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/bootstrap-datepicker.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/jquery.timepicker.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/google-map.js"></script>
-  <script src="https://colorlib.com/preview/theme/racks/js/main.js"></script>
+
+  <script src="{% static 'signup/js/index/jquery.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery-migrate-3.0.1.min.js' %}/"></script>
+  <script src="{% static 'signup/js/index/popper.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/bootstrap.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/aos.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/bootstrap-datepicker.js' %}"></script>
+  <script src="{% static 'signup/js/index/jquery.timepicker.min.js' %}"></script>
+  <script src="{% static 'signup/js/index/main.js' %}"></script>
     
   </body>
 </html>
