@@ -8,15 +8,15 @@ class Contest(models.Model):
         (0, "个人赛"),
         (1, "组队赛"),
     )
-    name = models.CharField(max_length=30)
-    contest_time = models.DateTimeField()
-    contest_location = models.CharField(max_length=30)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    introduction = models.TextField()
-    rules = models.TextField()
-    reward = models.TextField()
-    type = models.IntegerField(choices=TYPE, default=0)
+    name = models.CharField(max_length=30, verbose_name=u'比赛名称')
+    contest_time = models.DateTimeField(verbose_name=u'比赛时间')
+    contest_location = models.CharField(max_length=30, verbose_name=u'比赛地点')
+    start_time = models.DateTimeField(verbose_name=u'报名开始时间')
+    end_time = models.DateTimeField(verbose_name=u'报名结束时间')
+    introduction = models.TextField(verbose_name=u'比赛介绍')
+    rules = models.TextField(verbose_name=u'比赛规则')
+    reward = models.TextField(verbose_name=u'比赛奖励')
+    type = models.IntegerField(choices=TYPE, default=0, verbose_name=u'比赛类型')
 
     def __str__(self):
         return self.name
@@ -33,15 +33,17 @@ class Team(models.Model):
         (6, "Cancelled"),
         (7, "Deleted"),
     )
-    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE, verbose_name=u'所属比赛')
+    name = models.CharField(max_length=30, verbose_name=u'队伍名称')
 
     @property
     def remark(self):
         par_list = Participant.objects.filter(team=self)
         mk = -1
         for par in par_list:
-            if par.remark != 0 and par.remark != 4:
+            if par.remark == 3:
+                mk = 3
+            elif par.remark != 0 and par.remark != 4 and par.remark > mk:
                 mk = par.remark
             elif mk <= 0 and par.remark == 4:
                 mk = 4
@@ -61,9 +63,15 @@ class Team(models.Model):
 
     def participant(self):
         par_list = list(Participant.objects.filter(team=self))
-        while par_list.__len__() < 3:
-            par_list.append(Participant(name='', remark=3))
-        return par_list
+        tmp = []
+        for s in par_list:
+            st = s.name
+            if s.remark != 0 and s.remark != 3 and s.remark != 4:
+                st = st + '(' + s.get_remark_display() + ')'
+            tmp.append(st)
+        while tmp.__len__() < 3:
+            tmp.append('')
+        return tmp
 
     def __str__(self):
         return self.name
@@ -80,13 +88,13 @@ class Participant(models.Model):
         (6, "Cancelled"),
         (7, "Deleted"),
     )
-    name = models.CharField(max_length=10)
-    school_id = models.BigIntegerField()
-    qq_number = models.BigIntegerField()
-    faculty = models.CharField(max_length=20)
-    team = models.ForeignKey(Team,  on_delete=models.CASCADE)
-    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
-    remark = models.IntegerField(choices=STATUS, default=3)
+    name = models.CharField(max_length=10, verbose_name=u'姓名')
+    school_id = models.BigIntegerField(verbose_name=u'学号')
+    qq_number = models.BigIntegerField(verbose_name=u'QQ号')
+    faculty = models.CharField(max_length=20, verbose_name=u'学院')
+    team = models.ForeignKey(Team,  on_delete=models.CASCADE, verbose_name=u'所属队伍')
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE, verbose_name=u'所属比赛')
+    remark = models.IntegerField(choices=STATUS, default=3, verbose_name=u'审核状态')
 
     def __str__(self):
         return self.name

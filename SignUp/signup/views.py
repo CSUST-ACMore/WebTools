@@ -33,8 +33,8 @@ def register(request):
         if contest.type == 0:
             participant = Participant()
             participant.name = request.POST.get('username', '').replace(' ', '')
-            participant.school_id = request.POST.get('pass', 0).lstrip('-')
-            participant.qq_number = request.POST.get('qq_number', 0).lstrip('-')
+            participant.school_id = request.POST.get('pass', '').lstrip('-')
+            participant.qq_number = request.POST.get('qq_number', '').lstrip('-')
             participant.faculty = request.POST.get('xy', '')
             participant.contest = contest
 
@@ -54,16 +54,16 @@ def register(request):
 
             participant1 = Participant()
             participant1.name = request.POST.get('username1', '').replace(' ', '')
-            participant1.school_id = request.POST.get('pass1', 0).lstrip('-')
-            participant1.qq_number = request.POST.get('qq_number1', 0).lstrip('-')
+            participant1.school_id = request.POST.get('pass1', '').lstrip('-')
+            participant1.qq_number = request.POST.get('qq_number1', '').lstrip('-')
             participant1.faculty = request.POST.get('xy1', '')
             participant1.contest = contest
             participant1 = check_participant(participant1)
 
             participant2 = Participant()
             participant2.name = request.POST.get('username2', '').replace(' ', '')
-            participant2.school_id = request.POST.get('pass2', 0).lstrip('-')
-            participant2.qq_number = request.POST.get('qq_number2', 0).lstrip('-')
+            participant2.school_id = request.POST.get('pass2', '').lstrip('-')
+            participant2.qq_number = request.POST.get('qq_number2', '').lstrip('-')
             participant2.faculty = request.POST.get('xy2', '')
             participant2.contest = contest
             if participant2.name != '' and participant2.school_id != '' and participant2.qq_number != '':
@@ -71,8 +71,8 @@ def register(request):
 
             participant3 = Participant()
             participant3.name = request.POST.get('username3', '').replace(' ', '')
-            participant3.school_id = request.POST.get('pass3', 0).lstrip('-')
-            participant3.qq_number = request.POST.get('qq_number3', 0).lstrip('-')
+            participant3.school_id = request.POST.get('pass3', '').lstrip('-')
+            participant3.qq_number = request.POST.get('qq_number3', '').lstrip('-')
             participant3.faculty = request.POST.get('xy3', '')
             participant3.contest = contest
             if participant3.name != '' and participant3.school_id != '' and participant3.qq_number != '':
@@ -137,7 +137,10 @@ def check_participant(participant):
         sid = str(participant.school_id)
         ne = str(participant.name)
         now = datetime.datetime.now()
-        if len(sid) != 12 or int(sid[0:4]) not in range(now.year - 5, now.year + 1) or int(sid[8:10]) not in range(1, 21) or int(sid[10:12]) not in range(1, 61):
+        if now.month < 8:
+            now = now.replace(year=now.year-1)
+        if len(sid) != 12 or int(sid[0:4]) not in range(now.year - 4, now.year + 1) \
+                or int(sid[8:10]) not in range(1, 21) or int(sid[10:12]) not in range(1, 61):
             participant.remark = 1
         elif not all('\u4e00' <= char <= '\u9fff' for char in ne):
             participant.remark = 1

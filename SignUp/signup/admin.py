@@ -13,10 +13,32 @@ class ContestAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name',)
 
 
+class TeamListFilter(admin.SimpleListFilter):
+    title = '审核状态'
+    parameter_name = 'remark'
+
+    def lookups(self, request, model_admin):
+        return (
+            (0, "Accepted"),
+            (1, "Rejected"),
+            (2, "No Response"),
+            (3, "Waiting Judge"),
+            (4, "UnRating"),
+            (5, "Skipped"),
+            (6, "Cancelled"),
+            (7, "Deleted"),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() is None:
+            return queryset
+        return Team.objects.filter(pk__in=[tm.pk for tm in queryset if tm.remark == int(self.value())])
+
+
 class TeamAdmin(admin.ModelAdmin):
     list_display = ['id', 'name',  'get_remark_display']
     list_display_links = ('id', 'name',)
-    list_filter = ('contest__name',)
+    list_filter = ('contest__name', TeamListFilter)
     search_fields = ('name', )
     inlines = [ParticipantInline]
 
@@ -37,3 +59,5 @@ class ParticipantAdmin(admin.ModelAdmin):
 admin.site.register(Contest, ContestAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Participant, ParticipantAdmin)
+
+
