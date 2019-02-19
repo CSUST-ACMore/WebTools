@@ -23,7 +23,7 @@ def index(request):
 
 def register(request):
     contest = Contest.objects.order_by('-start_time')[0]
-    if datetime.datetime.now().timestamp() > contest.end_time.timestamp():
+    if datetime.datetime.now().timestamp() > contest.end_time.timestamp() or datetime.datetime.now().timestamp() < contest.start_time.timestamp():
         return HttpResponseRedirect("list.html")
     context = {
         'contest': contest
@@ -32,7 +32,7 @@ def register(request):
     if request.method == "POST":
         if contest.type == 0:
             participant = Participant()
-            participant.name = request.POST.get('username', '')
+            participant.name = request.POST.get('username', '').replace(' ', '')
             participant.school_id = request.POST.get('pass', 0)
             participant.qq_number = request.POST.get('qq_number', 0)
             participant.faculty = request.POST.get('xy', '')
@@ -47,14 +47,13 @@ def register(request):
             participant.team = team
             participant.save()
         else:
-            team.name = request.POST.get('teamname', '')
-            team.name.strip()
+            team.name = request.POST.get('teamname', '').replace(' ', '')
             if team.name == '' or team.name.__len__() > 30:
                 team.remark = 1
             team.contest = contest
 
             participant1 = Participant()
-            participant1.name = request.POST.get('username1', '')
+            participant1.name = request.POST.get('username1', '').replace(' ', '')
             participant1.school_id = request.POST.get('pass1', 0)
             participant1.qq_number = request.POST.get('qq_number1', 0)
             participant1.faculty = request.POST.get('xy1', '')
@@ -64,7 +63,7 @@ def register(request):
                 team.remark = participant1.remark
 
             participant2 = Participant()
-            participant2.name = request.POST.get('username2', '')
+            participant2.name = request.POST.get('username2', '').replace(' ', '')
             participant2.school_id = request.POST.get('pass2', 0)
             participant2.qq_number = request.POST.get('qq_number2', 0)
             participant2.faculty = request.POST.get('xy2', '')
@@ -75,7 +74,7 @@ def register(request):
                     team.remark = participant2.remark
 
             participant3 = Participant()
-            participant3.name = request.POST.get('username3', '')
+            participant3.name = request.POST.get('username3', '').replace(' ', '')
             participant3.school_id = request.POST.get('pass3', 0)
             participant3.qq_number = request.POST.get('qq_number3', 0)
             participant3.faculty = request.POST.get('xy3', '')
@@ -102,9 +101,11 @@ def register(request):
 
 def par_list(request):
     contest = Contest.objects.order_by('-start_time')[0]
+    if datetime.datetime.now().timestamp() < contest.start_time.timestamp():
+        return HttpResponseRedirect("index.html")
     team_list = Team.objects.order_by('-id').filter(contest=contest)
-    valid_team_list = team_list.filter(Q(remark=0) | Q(remark=4))
-    valid_team_count = valid_team_list.count()
+    valid_team_list = [team for team in team_list if team.remark == 0 or team.remark == 4]
+    valid_team_count = valid_team_list.__len__()
     participant_list = Participant.objects.order_by('-id').filter(contest=contest)
     valid_participant_list = participant_list.filter(Q(remark=0) | Q(remark=4))
     valid_participant_count = valid_participant_list.count()
@@ -116,13 +117,18 @@ def par_list(request):
         'participant_list': participant_list,
         'team_list': team_list,
         'valid_participant_count': valid_participant_count,
-        'valid_team_count': valid_team_count
+        'valid_team_count': valid_team_count,
+        'now': datetime.datetime.now().timestamp()
     }
     return render(request, 'signup/list.html', context)
 
 
 def lottery(request):
-    participant_count = Participant.objects.filter(Q(remark=0) | Q(remark=4)).count()
+    contest = Contest.objects.order_by('-start_time')[0]
+    if contest.type == 0:
+        participant_count = Participant.objects.filter(Q(contest=contest), Q(remark=0) | Q(remark=4)).count()
+    else:
+        participant_count = [t for t in Team.objects.filter(contest=contest) if t.remark == 0 or t.remark == 4].__len__()
     return render(request, 'signup/lottery.html', {'totTeam': participant_count})
 
 
@@ -145,15 +151,12 @@ def check_participant(participant):
             participant.remark = 1
         else:
             contest = Contest.objects.order_by('-start_time')[0]
-            participant_list = Participant.objects.filter(Q(contest=contest), Q(remark=0) | Q(remark=4), Q(team__remark=0) | Q(team__remark=4))
+            participant_list = [par for par in Participant.objects.filter(Q(contest=contest), Q(remark=0) | Q(remark=4)) if par.team.remark == 0 or par.team.remark == 4]
             for pat in participant_list:
-                print("id: " + str(pat.id))
-                print("sid: " + str(pat.school_id) + "*")
-                print("sid: " + str(participant.school_id) + "*")
                 if str(pat.school_id) == str(participant.school_id):
-                    print("Skip")
                     participant.remark = 5
                     break
+            Participant.objects.filter(Q(contest=contest), Q(remark=3)).update(remark=6)
     except Exception:
         participant.remark = 7
     return participant

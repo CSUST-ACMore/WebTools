@@ -109,8 +109,13 @@
       <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 text-center heading-section heading-section-white ftco-animate">
-              <h2 class="h1 font-weight-bold">他们都报名了哦~</h2>
-              <p><a href="list.html" class="btn btn-primary btn-outline-white mt-3 py-3 px-4">快让我看看</a></p>
+                {% if contest.start_time.timestamp > now  %}
+                    <h2 class="h1 font-weight-bold">报名开始后到此查看名单哦~</h2>
+                {% else %}
+                    <h2 class="h1 font-weight-bold">他们都报名了哦~</h2>
+                    <p><a href="list.html" class="btn btn-primary btn-outline-white mt-3 py-3 px-4">快让我看看</a></p>
+                {% endif %}
+
             </div>
           </div>
         </div>

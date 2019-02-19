@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
+  /*src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); */
 }
 
 
@@ -31,6 +31,7 @@ a {
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+color: #00ffff;
 }
 
 a:focus {
@@ -44,7 +45,7 @@ a:hover {
 /* ------------------------------------ */
 h1,h2,h3,h4,h5,h6 {margin: 0px;}
 
-p {margin: 0px;}
+p {margin: 0px;color: white;}
 
 ul, li {
 	margin: 0px;

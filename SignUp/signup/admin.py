@@ -14,24 +14,24 @@ class ContestAdmin(admin.ModelAdmin):
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name',  'remark']
+    list_display = ['id', 'name',  'get_remark_display']
     list_display_links = ('id', 'name',)
-    list_filter = ('contest__name', 'remark')
+    list_filter = ('contest__name',)
     search_fields = ('name', )
-    actions = ['all_ac']
     inlines = [ParticipantInline]
-
-    def all_ac(self, request, queryset):
-        queryset.update(remark=0)
-
-    all_ac.short_description = "全部AC"
 
 
 class ParticipantAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'school_id', 'qq_number', 'faculty', 'remark']
     list_display_links = ('id', 'name',)
-    list_filter = ('team__contest__name', 'remark')
+    list_filter = ('contest__name', 'remark')
     search_fields = ('name',)
+    actions = ['all_ac']
+
+    def all_ac(self, request, queryset):
+        queryset.update(remark=0)
+
+    all_ac.short_description = "全部AC"
 
 
 admin.site.register(Contest, ContestAdmin)

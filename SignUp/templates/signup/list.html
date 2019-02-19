@@ -21,16 +21,22 @@
 			<div class="wrap-table100">
 				<div class="table100">
                 {% if contest.type %}
-                    <p>（ 有效参赛 / 总报名数 ： {{ valid_team_count }} / {{ team_list.count }} ）</p>
+                    {% if contest.start_time.timestamp > now  %}
+                        <p> 报名时间 ： {{ contest.start_time }} - {{ contest.end_time }} </p>
+                    {% elif contest.end_time.timestamp > now %}
+                         <p>（ 有效参赛 / 总报名数 ： {{ valid_team_count }} / {{ team_list.count }} ）<a href="register.html">  点此报名  </a></p>
+                    {% else %}
+                        <p> 参赛总数 ： {{ valid_team_count }} </p>
+                    {% endif %}
                     <table>
 						<thead>
 							<tr class="table100-head">
 {#								<th class="column4">序号</th>#}
 								<th class="column1">队伍名称</th>
-								<th class="column2">队员</th>
-								<th class="column2">队员</th>
-								<th class="column2">队员</th>
-								<th class="column6">状态</th>
+								<th class="column2">队员1</th>
+								<th class="column2">队员2</th>
+								<th class="column2">队员3</th>
+								<th class="column6">队伍审核状态</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -39,7 +45,7 @@
                                     <tr>
 {#                                        <td class="column4">{{ participant.id }}</td>#}
                                         <td class="column1">{{ team.name }}</td>
-                                        <td class="column2">{{ team.participant.0.0 }}</td>
+                                        <td class="column2">{{ team.participant.0.0 }}({{ team.participant.0.1 }})</td>
                                         <td class="column2">{{ team.participant.1.0 }}</td>
                                         <td class="column2">{{ team.participant.2.0 }}</td>
                                         <td class="column6">{{ team.get_remark_display }}</td>
@@ -51,7 +57,13 @@
 						</tbody>
 					</table>
                 {% else %}
-                     <p>（ 有效参赛 / 总报名数 ： {{ valid_participant_count }} / {{ participant_list.count }} ）</p>
+                    {% if contest.start_time.timestamp > now  %}
+                        <p> 报名时间 ： {{ contest.start_time }} - {{ contest.end_time }} </p>
+                    {% elif contest.end_time.timestamp > now %}
+                         <p>（ 有效参赛 / 总报名数 ： {{ valid_participant_count }} / {{ participant_list.count }} ）<a href="register.html">  点此报名  </a></p>
+                    {% else %}
+                        <p> 参赛总数 ： {{ valid_participant_count }} </p>
+                    {% endif %}
 					<table>
 						<thead>
 							<tr class="table100-head">
@@ -59,7 +71,7 @@
 								<th class="column1">学号</th>
 								<th class="column2">姓名</th>
 								<th class="column3">学院</th>
-								<th class="column6">状态</th>
+								<th class="column6">审核状态</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -70,7 +82,7 @@
                                         <td class="column1">{{ participant.school_id }}</td>
                                         <td class="column2">{{ participant.name }}</td>
                                         <td class="column3">{{ participant.faculty }}</td>
-                                        <td class="column6">{{ participant.get_remark_display }}</td>
+                                        <td class="column6">{{ participant.team.get_remark_display }}</td>
                                     </tr>
                                 {% endfor %}
                             {% else %}
