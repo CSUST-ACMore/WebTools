@@ -33,8 +33,8 @@ def register(request):
         if contest.type == 0:
             participant = Participant()
             participant.name = request.POST.get('username', '').replace(' ', '')
-            participant.school_id = request.POST.get('pass', 0)
-            participant.qq_number = request.POST.get('qq_number', 0)
+            participant.school_id = request.POST.get('pass', 0).lstrip('-')
+            participant.qq_number = request.POST.get('qq_number', 0).lstrip('-')
             participant.faculty = request.POST.get('xy', '')
             participant.contest = contest
 
@@ -42,47 +42,41 @@ def register(request):
             team.contest = contest
 
             participant = check_participant(participant)
-            team.remark = participant.remark
             team.save()
             participant.team = team
             participant.save()
         else:
             team.name = request.POST.get('teamname', '').replace(' ', '')
             if team.name == '' or team.name.__len__() > 30:
+                team.name = team.name[:30]
                 team.remark = 1
             team.contest = contest
 
             participant1 = Participant()
             participant1.name = request.POST.get('username1', '').replace(' ', '')
-            participant1.school_id = request.POST.get('pass1', 0)
-            participant1.qq_number = request.POST.get('qq_number1', 0)
+            participant1.school_id = request.POST.get('pass1', 0).lstrip('-')
+            participant1.qq_number = request.POST.get('qq_number1', 0).lstrip('-')
             participant1.faculty = request.POST.get('xy1', '')
             participant1.contest = contest
             participant1 = check_participant(participant1)
-            if participant1.remark != 3:
-                team.remark = participant1.remark
 
             participant2 = Participant()
             participant2.name = request.POST.get('username2', '').replace(' ', '')
-            participant2.school_id = request.POST.get('pass2', 0)
-            participant2.qq_number = request.POST.get('qq_number2', 0)
+            participant2.school_id = request.POST.get('pass2', 0).lstrip('-')
+            participant2.qq_number = request.POST.get('qq_number2', 0).lstrip('-')
             participant2.faculty = request.POST.get('xy2', '')
             participant2.contest = contest
             if participant2.name != '' and participant2.school_id != '' and participant2.qq_number != '':
                 participant2 = check_participant(participant2)
-                if participant2.remark != 3:
-                    team.remark = participant2.remark
 
             participant3 = Participant()
             participant3.name = request.POST.get('username3', '').replace(' ', '')
-            participant3.school_id = request.POST.get('pass3', 0)
-            participant3.qq_number = request.POST.get('qq_number3', 0)
+            participant3.school_id = request.POST.get('pass3', 0).lstrip('-')
+            participant3.qq_number = request.POST.get('qq_number3', 0).lstrip('-')
             participant3.faculty = request.POST.get('xy3', '')
             participant3.contest = contest
             if participant3.name != '' and participant3.school_id != '' and participant3.qq_number != '':
                 participant3 = check_participant(participant3)
-                if participant3.remark != 3:
-                    team.remark = participant3.remark
 
             team.save()
             participant1.team = team
@@ -156,7 +150,7 @@ def check_participant(participant):
                 if str(pat.school_id) == str(participant.school_id):
                     participant.remark = 5
                     break
-            Participant.objects.filter(Q(contest=contest), Q(remark=3)).update(remark=6)
+            Participant.objects.filter(Q(contest=contest), Q(school_id=participant.school_id), Q(remark=3)).update(remark=6)
     except Exception:
         participant.remark = 7
     return participant

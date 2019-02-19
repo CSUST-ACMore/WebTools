@@ -45,9 +45,9 @@
                                     <tr>
 {#                                        <td class="column4">{{ participant.id }}</td>#}
                                         <td class="column1">{{ team.name }}</td>
-                                        <td class="column2">{{ team.participant.0.0 }}({{ team.participant.0.1 }})</td>
-                                        <td class="column2">{{ team.participant.1.0 }}</td>
-                                        <td class="column2">{{ team.participant.2.0 }}</td>
+                                        <td class="column2">{{ team.participant.0.name }} ( {{ team.participant.0.get_remark_display }} )</td>
+                                        <td class="column2">{{ team.participant.1.name }} ( {{ team.participant.1.get_remark_display }} )</td>
+                                        <td class="column2">{{ team.participant.2.name }} ( {{ team.participant.2.get_remark_display }} )</td>
                                         <td class="column6">{{ team.get_remark_display }}</td>
                                     </tr>
                                 {% endfor %}

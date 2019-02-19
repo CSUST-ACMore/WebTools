@@ -53,15 +53,16 @@ class Team(models.Model):
 
     @remark.setter
     def remark(self, mk):
-        Participant.objects.filter(team=self).update(remark=mk)
+        pass
+        # Participant.objects.filter(team=self).update(remark=mk)
 
     def get_remark_display(self):
         return self.STATUS[self.remark][1]
 
     def participant(self):
-        par_list = list(Participant.objects.filter(team=self).values_list('name', 'get_remark_display'))
+        par_list = list(Participant.objects.filter(team=self))
         while par_list.__len__() < 3:
-            par_list.append(('', ''))
+            par_list.append(Participant(name='', remark=3))
         return par_list
 
     def __str__(self):
