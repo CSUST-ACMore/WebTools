@@ -48,12 +48,16 @@ class ParticipantAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name',)
     list_filter = ('contest__name', 'remark')
     search_fields = ('name',)
-    actions = ['all_ac']
+    actions = ['all_ac', 'all_reject']
 
     def all_ac(self, request, queryset):
         queryset.update(remark=0)
 
-    all_ac.short_description = "全部AC"
+    def all_reject(self, request, queryset):
+        queryset.update(remark=1)
+
+    all_ac.short_description = "全部Accept"
+    all_reject.short_description = "全部Reject"
 
 
 admin.site.register(Contest, ContestAdmin)

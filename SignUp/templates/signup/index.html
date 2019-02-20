@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="row slider-text align-items-center justify-content-center" style="font-size: 20px;">
-          <p>{{ contest.introduction }}</p>
+          <p>{{ contest.introduction | linebreaks }}</p>
         </div>
       </div>
     </section>
@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="row slider-text align-items-center " style="font-size: 20px;">
-            <p>{{ contest.rules }}</p>
+            <p>{{ contest.rules | linebreaks }}</p>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="row slider-text align-items-center" style="font-size: 20px;">
-            <p>{{ contest.reward }}</p>
+            <p>{{ contest.reward | linebreaks }}</p>
         </div>
       </div>
     </section>
