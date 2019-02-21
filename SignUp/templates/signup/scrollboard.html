@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{{ contest.name }}</title>
+    <link rel="icon" href="{% static 'signup/img/favicon.ico' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'signup/css/scrollboard/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'signup/css/scrollboard/scrollboard.css' %}">
+    <script type="text/javascript" src="{% static 'signup/js/scrollboard/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'signup/js/scrollboard/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'signup/js/scrollboard/scrollboard.js' %}"></script>
+
+</head>
+
+<body>
+	<script type="text/javascript">
+	    var board = new Board({{ contest.problem_num }}, new Array({{ contest.gold_num }}, {{ contest.silver_num }}, {{ contest.bronze_num }}), StringToDate("{{ start_time }}"), StringToDate("{{ frozen_time }}"));
+	    board.showInitBoard();
+	    $('html').keydown(function(e) {
+	        if (e.keyCode == 13) {
+	            board.keydown();
+	        }
+	    });
+    </script>
+</body>
+
+</html>

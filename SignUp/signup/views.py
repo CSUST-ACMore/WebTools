@@ -3,13 +3,14 @@ import json
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 from django.template import loader
 
 from django.views.generic import View
 from .models import Participant, Contest, Team
 import datetime
-
 
 def index(request):
     contest = Contest.objects.order_by('-start_time')[0]
@@ -123,7 +124,22 @@ def lottery(request):
         participant_count = Participant.objects.filter(Q(contest=contest), Q(remark=0) | Q(remark=4)).count()
     else:
         participant_count = [t for t in Team.objects.filter(contest=contest) if t.remark == 0 or t.remark == 4].__len__()
-    return render(request, 'signup/lottery.html', {'totTeam': participant_count})
+    context = {
+        'contest': contest,
+        'totTeam': participant_count
+    }
+    return render(request, 'signup/lottery.html', context)
+
+
+def scrollboard(request):
+    contest = Contest.objects.order_by('-start_time')[0]
+    frozen_time = contest.start_time.replace(hour=contest.start_time.hour+12)
+    context = {
+        'contest': contest,
+        'start_time': contest.start_time.replace(hour=contest.start_time.hour+8).strftime("%Y-%m-%d %H:%M:%S"),
+        'frozen_time': frozen_time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    return render(request, 'signup/scrollboard.html', context)
 
 
 def check_participant(participant):
@@ -139,7 +155,9 @@ def check_participant(participant):
         now = datetime.datetime.now()
         if now.month < 8:
             now = now.replace(year=now.year-1)
-        if len(sid) != 12 or int(sid[0:4]) not in range(now.year - 4, now.year + 1) \
+        if len(str(participant.name)) > 5:
+            participant.remark = 1
+        elif len(sid) != 12 or int(sid[0:4]) not in range(now.year - 4, now.year + 1) \
                 or int(sid[8:10]) not in range(1, 21) or int(sid[10:12]) not in range(1, 61):
             participant.remark = 1
         elif not all('\u4e00' <= char <= '\u9fff' for char in ne):

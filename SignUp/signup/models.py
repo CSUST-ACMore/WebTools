@@ -16,6 +16,10 @@ class Contest(models.Model):
     introduction = models.TextField(verbose_name=u'比赛介绍')
     rules = models.TextField(verbose_name=u'比赛规则')
     reward = models.TextField(verbose_name=u'比赛奖励')
+    problem_num = models.IntegerField(default=13, verbose_name=u'题目数量')
+    gold_num = models.IntegerField(default=8, verbose_name=u'金奖数量')
+    silver_num = models.IntegerField(default=16, verbose_name=u'银奖数量')
+    bronze_num = models.IntegerField(default=24, verbose_name=u'铜奖数量')
     type = models.IntegerField(choices=TYPE, default=0, verbose_name=u'比赛类型')
 
     def __str__(self):
