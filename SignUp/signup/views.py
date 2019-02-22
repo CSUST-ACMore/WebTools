@@ -138,10 +138,10 @@ def lottery(request):
 def scrollboard(request):
     contest = Contest.objects.order_by('-start_time')[0]
     fetch_data()
-    frozen_time = contest.start_time.replace(hour=contest.start_time.hour+12)
+    frozen_time = contest.contest_time
     context = {
         'contest': contest,
-        'start_time': contest.start_time.replace(hour=contest.start_time.hour+8).strftime("%Y-%m-%d %H:%M:%S"),
+        'start_time': contest.contest_time.strftime("%Y-%m-%d %H:%M:%S"),
         'frozen_time': frozen_time.strftime("%Y-%m-%d %H:%M:%S"),
     }
     return render(request, 'signup/scrollboard.html', context)
