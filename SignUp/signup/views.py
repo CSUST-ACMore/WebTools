@@ -12,6 +12,9 @@ from django.views.generic import View
 from .models import Participant, Contest, Team
 import datetime
 
+from .fetch_data import fetch_data
+
+
 def index(request):
     contest = Contest.objects.order_by('-start_time')[0]
     now = datetime.datetime.now().timestamp()
@@ -131,8 +134,10 @@ def lottery(request):
     return render(request, 'signup/lottery.html', context)
 
 
+@login_required
 def scrollboard(request):
     contest = Contest.objects.order_by('-start_time')[0]
+    fetch_data()
     frozen_time = contest.start_time.replace(hour=contest.start_time.hour+12)
     context = {
         'contest': contest,
@@ -140,6 +145,10 @@ def scrollboard(request):
         'frozen_time': frozen_time.strftime("%Y-%m-%d %H:%M:%S"),
     }
     return render(request, 'signup/scrollboard.html', context)
+
+
+def login(request):
+    return HttpResponseRedirect("/index.html")
 
 
 def check_participant(participant):

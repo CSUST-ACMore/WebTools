@@ -18,7 +18,7 @@ def fetch_team(cursor, contest_id):
         mp['real_name'] = str(res[0][13])
         data.append(mp)
     jsn['data'] = data
-    with open('signup/static/signup/data/teamData.json', 'w') as f:
+    with open('static/signup/data/teamData.json', 'w') as f:
         json.dump(jsn, f)
 
 
@@ -45,12 +45,12 @@ def fetch_submit(cursor, contest_id):
         mp["status"] = verdict[submition[6]]
         data.append(mp)
     jsn['data'] = data
-    with open('signup/static/signup/data/submitData.json', 'w') as f:
+    with open('static/signup/data/submitData.json', 'w') as f:
         json.dump(jsn, f)
 
 
 def fetch_data():
-    db = psycopg2.connect(host='localhost', port='6666', dbname='onlinejudge', user='onlinejudge',
+    db = psycopg2.connect(host='172.17.0.1', port='6666', dbname='onlinejudge', user='onlinejudge',
                           password='onlinejudge')
     cursor = db.cursor()
     sql = "SELECT * FROM contest ORDER BY create_time DESC;"
