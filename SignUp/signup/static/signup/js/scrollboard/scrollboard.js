@@ -288,8 +288,8 @@ function TeamCompare(a, b) {
         return a.solved > b.solved ? -1 : 1;
     if (a.penalty != b.penalty) //第二关键字，罚时少者排位高
         return a.penalty < b.penalty ? -1 : 1;
-    //return a.teamId < b.teamId ? -1 : 1; //第三关键字，队伍ID小者排位高
-    return a.teamId.localeCompare(b.teamId);
+    return a.teamId < b.teamId ? -1 : 1; //第三关键字，队伍ID小者排位高
+    //return a.teamId.localeCompare(b.teamId);
 }
 
 
