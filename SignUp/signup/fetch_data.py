@@ -39,7 +39,7 @@ def fetch_submit(cursor, contest_id):
         mp = {}
         mp['team_id'] = submition[4]
         mp['submit_id'] = str(submition[0])
-        mp['problem_id'] = pro_mp[submition[2]]
+        mp['problem_id'] = ord(pro_mp[submition[2]])-65
         t = time.strptime(str(submition[3])[0:19], "%Y-%m-%d %H:%M:%S")
         mp['submit_time'] = time.strftime("%Y-%m-%d %H:%M:%S", t)
         verdict = [0, 2, 2, 3, 5, 8, -1, -1, 4, 7, 4]
