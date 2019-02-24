@@ -461,7 +461,7 @@ Board.prototype.showInitBoard = function() {
         var medal = -1;
         if (team.solved != 0) {
             if(team.official==true) {
-                rank = i + 1;
+                rank = maxRank;
                 maxRank = rank + 1;
             }
             for (var j = this.medalRanks.length - 1; j >= 0; j--) {
