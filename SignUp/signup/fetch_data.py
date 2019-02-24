@@ -36,15 +36,16 @@ def fetch_submit(cursor, contest_id):
     cursor.execute(sql)
     results = cursor.fetchall()
     for submition in results:
-        mp = {}
-        mp['team_id'] = submition[4]
-        mp['submit_id'] = str(submition[0])
-        mp['problem_id'] = ord(pro_mp[submition[2]])-65
-        t = time.strptime(str(submition[3])[0:19], "%Y-%m-%d %H:%M:%S")
-        mp['submit_time'] = time.strftime("%Y-%m-%d %H:%M:%S", t)
-        verdict = [0, 2, 2, 3, 5, 8, -1, -1, 4, 7, 4]
-        mp["status"] = verdict[submition[6]]
-        data.append(mp)
+        if submition[2] in pro_mp:
+            mp = {}
+            mp['team_id'] = submition[4]
+            mp['submit_id'] = str(submition[0])
+            mp['problem_id'] = ord(pro_mp[submition[2]])-65
+            t = time.strptime(str(submition[3])[0:19], "%Y-%m-%d %H:%M:%S")
+            mp['submit_time'] = time.strftime("%Y-%m-%d %H:%M:%S", t)
+            verdict = [0, 2, 2, 3, 5, 8, -1, -1, 4, 7, 4]
+            mp["status"] = verdict[submition[6]]
+            data.append(mp)
     jsn['data'] = data
     with open('static/signup/data/submitData.json', 'w') as f:
         json.dump(jsn, f)
