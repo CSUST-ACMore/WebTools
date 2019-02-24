@@ -479,7 +479,12 @@ Board.prototype.showInitBoard = function() {
             "<div id=\"team_" + team.teamId + "\" class=\"team-item\" team-id=\"" + team.teamId + "\"> \
                     <table class=\"table\"> \
                         <tr>";
-        var rankHTML = "<th class=\"rank\" width=\"" + rankPer + "%\">" + rank + "</th>";
+        var rankHTML;
+        if(team.official==true) {
+            rankHTML = "<th class=\"rank\" width=\"" + rankPer + "%\">" + rank + "</th>";
+        } else {
+            rankHTML = "<th class=\"rank\" width=\"" + rankPer + "%\">" + "*" + "</th>";
+        }
         var teamHTML = "<td class=\"team-name\" width=\"" + teamPer + "%\"><span>" + team.teamName + /*"<br/>" + team.teamMember +*/ "</span></td>";
         var solvedHTML = "<td class=\"solved\" width=\"" + solvedPer + "%\">" + team.solved + "</td>";
         var penaltyHTML = "<td class=\"penalty\" width=\"" + penaltyPer + "%\">" + parseInt(team.penalty / 1000.0 / 60.0) + "</td>";
@@ -649,7 +654,11 @@ Board.prototype.updateTeamStatus = function(team) {
                 if (medal != -1)
                     $team.addClass(thisBoard.medalStr[medal]);
 
-                $("#team_" + t.teamId + " .rank").html(rankValue);
+                if(t.official==true) {
+                    $("#team_" + t.teamId + " .rank").html(rankValue);
+                } else {
+                    $("#team_" + t.teamId + " .rank").html("*");
+                }
 
             }
 
