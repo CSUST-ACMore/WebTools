@@ -16,7 +16,7 @@
 
 <body>
 	<script type="text/javascript">
-	    var board = new Board({{ contest.problem_num }}, new Array({{ contest.gold_num }}, {{ contest.silver_num }}, {{ contest.bronze_num }}), StringToDate("{{ start_time }}"), StringToDate("{{ frozen_time }}"));
+	    var board = new Board({{ pro_num }}, new Array({{ contest.gold_num }}, {{ contest.silver_num }}, {{ contest.bronze_num }}), StringToDate("{{ start_time }}"), StringToDate("{{ frozen_time }}"));
 	    board.showInitBoard();
 	    $('html').keydown(function(e) {
 	        if (e.keyCode == 13) {

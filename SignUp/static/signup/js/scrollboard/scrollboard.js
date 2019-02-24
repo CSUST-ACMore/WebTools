@@ -50,9 +50,7 @@ function getSubmitList() {
         success: function(result) {
             for (var i in result.data) {
                 var sub = result.data[i];
-                var ACode = 65;
-                var alphabetId =String.fromCharCode(sub.problem_id+ACode);
-                data.push(new Submit(sub.submit_id, sub.team_id, alphabetId, StringToDate(sub.submit_time), sub.status));
+                data.push(new Submit(sub.submit_id, sub.team_id, sub.problem_id, StringToDate(sub.submit_time), sub.status));
             }
         },
         error: function() {
@@ -288,8 +286,8 @@ function TeamCompare(a, b) {
         return a.solved > b.solved ? -1 : 1;
     if (a.penalty != b.penalty) //第二关键字，罚时少者排位高
         return a.penalty < b.penalty ? -1 : 1;
-    //return a.teamId < b.teamId ? -1 : 1; //第三关键字，队伍ID小者排位高
-    return a.teamId.localeCompare(b.teamId);
+    return a.teamId < b.teamId ? -1 : 1; //第三关键字，队伍ID小者排位高
+    //return a.teamId.localeCompare(b.teamId);
 }
 
 

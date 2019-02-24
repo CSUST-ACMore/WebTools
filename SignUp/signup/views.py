@@ -10,7 +10,7 @@ from django.template import loader
 
 from django.views.generic import View
 from .models import Participant, Contest, Team
-import datetime
+from datetime import datetime, timedelta
 
 from .fetch_data import fetch_data
 
@@ -137,11 +137,14 @@ def lottery(request):
 @login_required
 def scrollboard(request):
     contest = Contest.objects.order_by('-start_time')[0]
-    fetch_data()
-    frozen_time = contest.contest_time
+    mp = fetch_data(contest.contest_id)
+    start_time = mp['start_time']
+    pro_num = mp['pro_num']
+    frozen_time = start_time + timedelta(hours=4)
     context = {
         'contest': contest,
-        'start_time': contest.contest_time.strftime("%Y-%m-%d %H:%M:%S"),
+        'pro_num': pro_num,
+        'start_time': start_time.strftime("%Y-%m-%d %H:%M:%S"),
         'frozen_time': frozen_time.strftime("%Y-%m-%d %H:%M:%S"),
     }
     return render(request, 'signup/scrollboard.html', context)

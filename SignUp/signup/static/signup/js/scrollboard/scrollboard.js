@@ -50,9 +50,7 @@ function getSubmitList() {
         success: function(result) {
             for (var i in result.data) {
                 var sub = result.data[i];
-                var ACode = 65;
-                var alphabetId =String.fromCharCode(sub.problem_id+ACode);
-                data.push(new Submit(sub.submit_id, sub.team_id, alphabetId, StringToDate(sub.submit_time), sub.status));
+                data.push(new Submit(sub.submit_id, sub.team_id, sub.problem_id, StringToDate(sub.submit_time), sub.status));
             }
         },
         error: function() {
