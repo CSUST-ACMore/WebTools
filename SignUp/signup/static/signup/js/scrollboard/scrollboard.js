@@ -103,7 +103,7 @@ function getTeamList() {
         success: function(result) {
             for (var key in result.data) {
                 var team = result.data[key];
-                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]==='（');
+                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]!='（');
             }
         },
         error: function() {
