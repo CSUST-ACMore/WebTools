@@ -103,7 +103,7 @@ function getTeamList() {
         success: function(result) {
             for (var key in result.data) {
                 var team = result.data[key];
-                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]==='*');
+                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]==='（');
             }
         },
         error: function() {
@@ -449,7 +449,7 @@ Board.prototype.showInitBoard = function() {
         $('.ranktable-head tr').append(bodyHTML);
     }
 
-    var maxRank = 0;
+    var maxRank = 1;
 
     //队伍
     for (var i = 0; i < this.teamCount; i++) {
@@ -457,11 +457,13 @@ Board.prototype.showInitBoard = function() {
         var team = this.teamNowSequence[i];
 
         //计算每支队伍的排名和奖牌情况
-        var rank = 0;
+        var rank = maxRank-1;
         var medal = -1;
         if (team.solved != 0) {
-            rank = i + 1;
-            maxRank = rank + 1;
+            if(team.official==true) {
+                rank = i + 1;
+                maxRank = rank + 1;
+            }
             for (var j = this.medalRanks.length - 1; j >= 0; j--) {
                 if (rank <= this.medalRanks[j])
                     medal = j;
@@ -616,7 +618,7 @@ Board.prototype.updateTeamStatus = function(team) {
             /*
             更新Rank
              */
-            var maxRank = 0;
+            var maxRank = 1;
 
             //移除div中的奖牌样式
             for (var i in thisBoard.medalStr) {
@@ -627,10 +629,12 @@ Board.prototype.updateTeamStatus = function(team) {
             for (var i = 0; i < thisBoard.teamCount; i++) {
                 var t = thisBoard.teamNextSequence[i];
                 var medal = -1;
-                var rankValue = 0;
+                var rankValue = maxRank-1;
                 if (t.solved != 0) {
-                    rankValue = i + 1;
-                    maxRank = rankValue + 1;
+                    if(t.official==true) {
+                        rankValue = maxRank;
+                        maxRank = rankValue + 1;
+                    }
                     for (var j = thisBoard.medalRanks.length - 1; j >= 0; j--) {
                         if (rankValue <= thisBoard.medalRanks[j])
                             medal = j;
