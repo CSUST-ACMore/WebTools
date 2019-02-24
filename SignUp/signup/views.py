@@ -17,7 +17,7 @@ from .fetch_data import fetch_data
 
 def index(request):
     contest = Contest.objects.order_by('-start_time')[0]
-    now = datetime.datetime.now().timestamp()
+    now = datetime.now().timestamp()
     context = {
         'contest': contest,
         'now': now,
@@ -27,7 +27,7 @@ def index(request):
 
 def register(request):
     contest = Contest.objects.order_by('-start_time')[0]
-    if datetime.datetime.now().timestamp() > contest.end_time.timestamp() or datetime.datetime.now().timestamp() < contest.start_time.timestamp():
+    if datetime.now().timestamp() > contest.end_time.timestamp() or datetime.now().timestamp() < contest.start_time.timestamp():
         return HttpResponseRedirect("list.html")
     context = {
         'contest': contest
@@ -99,7 +99,7 @@ def register(request):
 
 def par_list(request):
     contest = Contest.objects.order_by('-start_time')[0]
-    if datetime.datetime.now().timestamp() < contest.start_time.timestamp():
+    if datetime.now().timestamp() < contest.start_time.timestamp():
         return HttpResponseRedirect("index.html")
     team_list = Team.objects.order_by('-id').filter(contest=contest)
     valid_team_list = [team for team in team_list if team.remark == 0 or team.remark == 4]
@@ -107,7 +107,7 @@ def par_list(request):
     participant_list = Participant.objects.order_by('-id').filter(contest=contest)
     valid_participant_list = participant_list.filter(Q(remark=0) | Q(remark=4))
     valid_participant_count = valid_participant_list.count()
-    if datetime.datetime.now().timestamp() > contest.end_time.timestamp():
+    if datetime.now().timestamp() > contest.end_time.timestamp():
         participant_list = valid_participant_list
         team_list = valid_team_list
     context = {
@@ -116,7 +116,7 @@ def par_list(request):
         'team_list': team_list,
         'valid_participant_count': valid_participant_count,
         'valid_team_count': valid_team_count,
-        'now': datetime.datetime.now().timestamp()
+        'now': datetime.now().timestamp()
     }
     return render(request, 'signup/list.html', context)
 
@@ -164,7 +164,7 @@ def check_participant(participant):
             participant.qq_number = participant.qq_number[:13]
         sid = str(participant.school_id)
         ne = str(participant.name)
-        now = datetime.datetime.now()
+        now = datetime.now()
         if now.month < 8:
             now = now.replace(year=now.year-1)
         if len(str(participant.name)) > 5:
