@@ -257,8 +257,9 @@ Team.prototype.countUnkonwnProblme = function() {
  * @return {boolean} true:当前队伍排名上升,false:排名无变化
  */
 Team.prototype.updateOneProblem = function() {
-    for (var key in this.submitProblemList) {
-        var subProblem = this.submitProblemList[key];
+    for (var key = 0 ; key < board.problemCount ; key++) {
+        var subProblem = this.submitProblemList[String.fromCharCode(key+65)];
+        if (!subProblem) continue;
         //如果题目结果未知
         if (subProblem.isUnkonwn) {
             //更新题目状态
