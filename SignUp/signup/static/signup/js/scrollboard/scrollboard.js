@@ -103,7 +103,7 @@ function getTeamList() {
         success: function(result) {
             for (var key in result.data) {
                 var team = result.data[key];
-                data[team.team_id] = new Team(team.team_id, team.real_name, null, 1);
+                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]==='*');
             }
         },
         error: function() {
@@ -170,6 +170,7 @@ function TeamProblem() {
     this.penalty = 0; //罚时毫秒数
     this.acceptedTime = new Date(); //AC时间
     this.submitCount = 0; //AC前提交次数，如果AC了，值加1
+    this.realCount = 0;
     this.isUnkonwn = false; //是否为封榜后提交，如果封榜前已AC，也为false
 }
 
@@ -184,7 +185,7 @@ function Team(teamId, teamName, teamMember, official) {
     this.teamId = teamId; //队伍ID
     this.teamName = teamName; //队伍名
     this.teamMember = teamMember; //队员
-    this.official = true; //计入排名
+    this.official = official; //计入排名
     this.solved = 0; //通过数
     this.penalty = 0; //罚时,单位为毫秒
     this.gender = false; //女队,默认否
@@ -221,6 +222,7 @@ Team.prototype.init = function(startTime, freezeBoardTime) {
         }
         //增加提交次数
         p.submitCount++;
+        if(!p.isAccepted && sub.resultId!=7) p.realCount++;
         //更新AC状态
         p.isAccepted = (sub.resultId == 0);
         //如果当前提交AC
@@ -229,6 +231,7 @@ Team.prototype.init = function(startTime, freezeBoardTime) {
             p.acceptedTime = sub.subTime.getTime() - startTime.getTime();
             //如果为封榜前AC，则计算罚时,且队伍通过题数加1
             if (p.acceptedTime < freezeBoardTime - startTime) {
+                p.submitCount = p.realCount;
                 p.penalty += p.acceptedTime + (p.submitCount - 1) * 20 * 60 * 1000;
                 this.solved++;
                 this.penalty += p.penalty;
@@ -267,6 +270,7 @@ Team.prototype.updateOneProblem = function() {
             delete this.unkonwnAlphabetIdMap[subProblem.alphabetId];
             //如果AC，则更新题目状态
             if (subProblem.isAccepted) {
+                subProblem.submitCount = subProblem.realCount;
                 subProblem.penalty += subProblem.acceptedTime + (subProblem.submitCount - 1) * 20 * 60 * 1000;
                 this.solved++;
                 this.penalty += subProblem.penalty;
