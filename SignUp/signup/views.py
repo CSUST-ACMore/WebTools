@@ -50,7 +50,7 @@ def register(request):
             participant.team = team
             participant.save()
         else:
-            team.name = request.POST.get('teamname', '').replace(' ', '')
+            team.name = request.POST.get('teamname', '').strip(' ').lstrip('*')
             if team.name == '' or team.name.__len__() > 30:
                 team.name = team.name[:30]
                 team.remark = 1

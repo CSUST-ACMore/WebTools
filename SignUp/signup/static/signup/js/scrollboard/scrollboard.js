@@ -103,7 +103,7 @@ function getTeamList() {
         success: function(result) {
             for (var key in result.data) {
                 var team = result.data[key];
-                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]!='（');
+                data[team.team_id] = new Team(team.team_id, team.real_name, null, team.real_name[0]!='*');
             }
         },
         error: function() {
@@ -214,7 +214,7 @@ Team.prototype.init = function(startTime, freezeBoardTime) {
         //设置alphabetId
         p.alphabetId = sub.alphabetId;
         //已经AC的题目不再计算
-        if (p.isAccepted) continue;
+        if (p.isAccepted || sub.resultId == 7) continue;
         //封榜后的提交设置isUnkonwn为true
         if (sub.subTime > freezeBoardTime) {
             p.isUnkonwn = true;
@@ -617,8 +617,8 @@ Board.prototype.updateTeamStatus = function(team) {
     //延时更新榜单
     //传参，不懂原理，用此可以在动画的回调函数使用参数
     (function(thisBoard, team) {
-        //延时1.6s
-        $('#timer').animate({ margin: 0 }, 1600, function() {
+        //延时1.2s
+        $('#timer').animate({ margin: 0 }, 1200, function() {
 
             /*
             更新Rank

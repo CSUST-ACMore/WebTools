@@ -17,9 +17,9 @@ class Contest(models.Model):
     rules = models.TextField(verbose_name=u'比赛规则')
     reward = models.TextField(verbose_name=u'比赛奖励')
     contest_id = models.IntegerField(default=1, verbose_name=u'比赛ID')
-    gold_num = models.IntegerField(default=8, verbose_name=u'金奖数量')
-    silver_num = models.IntegerField(default=16, verbose_name=u'银奖数量')
-    bronze_num = models.IntegerField(default=24, verbose_name=u'铜奖数量')
+    gold_num = models.IntegerField(default=6, verbose_name=u'金奖数量')
+    silver_num = models.IntegerField(default=10, verbose_name=u'银奖数量')
+    bronze_num = models.IntegerField(default=16, verbose_name=u'铜奖数量')
     type = models.IntegerField(choices=TYPE, default=0, verbose_name=u'比赛类型')
 
     def __str__(self):
