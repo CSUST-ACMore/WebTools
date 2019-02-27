@@ -3,6 +3,10 @@ from django.contrib import admin
 from .models import Participant, Team, Contest
 
 
+admin.site.site_header = 'ACMore'
+admin.site.site_title = 'ACMore'
+
+
 class ParticipantInline(admin.TabularInline):
     model = Participant
     raw_id_fields = ['team']
