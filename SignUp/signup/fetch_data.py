@@ -11,7 +11,7 @@ def fetch_team(cursor, contest_id):
     for submition in results:
         mp = {}
         mp['team_id'] = submition[4]
-        sql = "SELECT * FROM user_profile WHERE id=" + str(submition[4])
+        sql = "SELECT * FROM user_profile WHERE user_id=" + str(submition[4])
         cursor.execute(sql)
         res = cursor.fetchall()
         mp['nickname'] = str(submition[11])
