@@ -165,7 +165,7 @@ def printer(request):
     elif request.method == "POST":
         try:
             cd = Code()
-            now = datetime.now()
+            now = datetime.now() + timedelta(hours=8)
             team = request.POST['team']
             password = request.POST['password']
             code = request.POST['code']
