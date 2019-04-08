@@ -37,8 +37,14 @@ class Team(models.Model):
         (6, "Cancelled"),
         (7, "Deleted"),
     )
+    TYPE = (
+        (0, "normal"),
+        (1, "AllGirl"),
+        (2, "OtherSchool")
+    )
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE, verbose_name=u'所属比赛')
     name = models.CharField(max_length=30, verbose_name=u'队伍名称')
+    type = models.IntegerField(choices=TYPE, default=0, verbose_name=u'特殊队伍')
 
     @property
     def remark(self):
@@ -102,4 +108,14 @@ class Participant(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Code(models.Model):
+    code = models.TextField()
+    team = models.CharField(max_length=33, default="无效队伍")
+    pw = models.CharField(max_length=16, default="无效密码")
+    tim = models.CharField(max_length=22, default="")
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    printed = models.BooleanField(default=False)
+
 

@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'signup/img/favicon.ico' %}">
+
+    <title>{{ contest.name }}</title>
+    <link href="{% static "signup/css/printer/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "signup/css/printer/sticky-footer-navbar.css" %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img src="{% static 'signup/img/favicon.ico' %}" class="navbar-brand" style="padding: 5px 5px;">
+          <a class="navbar-brand" href="#">{{ contest.name }}</a>
+
+        </div>
+{#        <div id="navbar" class="collapse navbar-collapse">#}
+{#          <ul class="nav navbar-nav">#}
+{#            <li class="active"><a href="#">Print</a></li>#}
+{#            <li><a href="#about">Board</a></li>#}
+{#          </ul>#}
+{#        </div><!--/.nav-collapse -->#}
+      </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <form class="form-horizontal" action="" method="post" style="margin-top:30px;">
+        {% csrf_token %}
+
+        {% if status == "waiting" %}
+
+        {% elif status == "wrong" %}
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <div class="alert alert-danger" role="alert">提交失败!</div>
+          </div>
+        </div>
+        {% elif status == "success" %}
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <div class="alert alert-success" role="alert">已提交, 代码会尽快送到!</div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Team</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="team" name="team" placeholder="team账号">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" name="password" class="form-control" id="team" name="team" placeholder="密码">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Code</label>
+          <div class="col-sm-10">
+            <textarea class="form-control"  name="code" rows="25" cols="80" placeholder="/ * 代码贴到此处 * /"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" > 提 交 </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">CSUST ACMore</p>
+      </div>
+    </footer>
+
+
+    <script src="{% static "signup/js/printer/jquery.min.js" %}"></script>
+    <script src="{% static "signup/js/printer/bootstrap.min.js" %}"></script>
+  </body>
+</html>

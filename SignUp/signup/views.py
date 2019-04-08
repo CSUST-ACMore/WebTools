@@ -1,7 +1,7 @@
 import json
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 
 from django.views.generic import View
-from .models import Participant, Contest, Team
+from .models import Participant, Contest, Team, Code
 from datetime import datetime, timedelta
 
 from .fetch_data import fetch_data
@@ -148,6 +148,37 @@ def scrollboard(request):
         'frozen_time': frozen_time.strftime("%Y-%m-%d %H:%M:%S"),
     }
     return render(request, 'signup/scrollboard.html', context)
+
+
+def printer(request):
+    contest = Contest.objects.order_by('-start_time')[0]
+    if request.method == "GET":
+        try:
+            status = request.GET['status']
+        except:
+            status = ""
+        context = {
+            'contest': contest,
+            'status': status,
+        }
+        return render(request, 'signup/print.html', context)
+    elif request.method == "POST":
+        try:
+            cd = Code()
+            now = datetime.now()
+            team = request.POST['team']
+            password = request.POST['password']
+            code = request.POST['code']
+            header = "Team: "+team+"\t\tTime: "+now.strftime("%H:%M:%S")+"\n"+"--------------------------------------------\n"
+            cd.team = team
+            cd.pw = password
+            cd.code = header + code + "\n------------------End------------------\n"
+            cd.tim = now.strftime("%H:%M:%S")
+            cd.contest = contest
+            cd.save()
+            return redirect('/print?status=success')
+        except Exception:
+            return redirect('/print?status=wrong')
 
 
 def login(request):

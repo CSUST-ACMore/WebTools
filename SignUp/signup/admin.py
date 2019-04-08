@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Participant, Team, Contest
+from .models import Participant, Team, Contest, Code
 
 
 admin.site.site_header = 'ACMore'
@@ -64,8 +64,13 @@ class ParticipantAdmin(admin.ModelAdmin):
     all_reject.short_description = "全部Reject"
 
 
+class CodeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'team', 'pw', 'printed']
+    list_filter = ('contest__name', 'printed')
+
+
 admin.site.register(Contest, ContestAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Participant, ParticipantAdmin)
-
+admin.site.register(Code, CodeAdmin)
 
